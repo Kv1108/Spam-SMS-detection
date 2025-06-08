@@ -12,12 +12,12 @@ A production-ready spam detection system achieving **96% accuracy**.
 - 🛠️ Modular code: Easy to retrain/extend
 - 📦 Includes pre-trained models (`spam_model.pkl`)
 
-##🤖 How It Works
+## 🤖 How It Works
 1. Text preprocessing (lowercasing, special char removal)
 2. TF-IDF vectorization
 3. Logistic Regression classification
 
-##To run the web app
+## To run the web app
 1. Open Command Prompt (CMD)
 2. Navigate to your project folder:cd folder-path
   3. streamlit run notebooks/spam_detector.py
