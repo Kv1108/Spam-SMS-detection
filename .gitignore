@@ -1,0 +1,12 @@
+# Ignore large data files
+data/spam.csv
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment
+venv/
+
+# Ignore model files (if too large)
+*.pkl
