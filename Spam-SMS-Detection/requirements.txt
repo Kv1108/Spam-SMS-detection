@@ -1,5 +1,6 @@
-pandas
 scikit-learn
-numpy
-matplotlib
-jupyter
+xgboost
+nltk
+pandas, numpy
+matplotlib, seaborn
+emoji, flask
