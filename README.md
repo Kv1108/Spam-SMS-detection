@@ -1,22 +1,119 @@
-# 📩 Spam SMS Classifier
+# README.md
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/yourusername/reponame/notebooks/spam_detector.py)
-![GitHub last commit](https://img.shields.io/github/last-commit/Kv1108/Spam-SMS-detection)
-![License](https://img.shields.io/badge/License-MIT-green)
+This repository contains multiple Machine Learning projects developed during my internship. Each folder is a self-contained project with scripts, models, notebooks, and deployment tools.
 
-A production-ready spam detection system achieving **98.2% accuracy** on the UCI SMS Spam Collection dataset.
+---
 
-## 🎯 Features
-- 🚀 **One-click demo** via Streamlit Cloud
-- 📊 Model evaluation: Precision/Recall/F1 scores
-- 🛠️ Modular code: Easy to retrain/extend
-- 📦 Includes pre-trained models (`spam_model.pkl`)
+## 🔍 Project 3: SMS Spam Detection (Advanced NLP + Ensemble Models)
 
-## 🔥 Live Demo
-Try it now: [Streamlit App](https://share.streamlit.io/yourusername/reponame/notebooks/spam_detector.py)
+A production-ready spam detection system using:
+- Deep NLP preprocessing
+- Structural + linguistic feature engineering
+- Ensemble models (Random Forest, XGBoost, Naive Bayes) stacked with Logistic Regression
 
-## 🛠️ Installation
+## 📁 Repository Structure
+
+```
+📦 Root Folder
+├── Customer-Segmentation/              # Project 1
+├── Handwritten-text-generation/        # Project 2
+├── Spam-SMS-Detection/                 # Project 3 (this one)
+│   ├── data/
+│   │   └── spam.csv
+│   ├── notebooks/
+│   │   ├── spam_detector.py            # Advanced spam detector training script
+│   │   └── Spam_SMS_detection.ipynb
+│   ├── Snapshots/                      # Screenshots for report/demo
+│   ├── templates/
+│   │   └── index.html                  # Web frontend
+│   ├── app.py                          # Flask app for live predictions
+│   ├── spam_model.pkl                  # Model (optional legacy)
+│   ├── spam_xgb_model.pkl              # Model (optional legacy)
+│   ├── tfidf_vectorizer.pkl            # Vectorizer (optional legacy)
+│   ├── spam_detection_model.pkl        # ✅ Final trained ensemble model
+│   ├── requirements.txt
+│   └── README.md                       # This file
+```
+
+---
+
+## 🧠 Model Architecture
+
+- **Text Preprocessing**
+  - Lowercasing, URL/phone/email removal, emoji removal
+  - Tokenization, lemmatization, stopword removal (NLTK)
+
+- **Features**
+  - TF-IDF of message content
+  - Structural features (char count, digit count, URLs, keyword matches, etc.)
+
+- **Models**
+  - Random Forest (RF)
+  - XGBoost (XGB)
+  - Multinomial Naive Bayes (NB)
+  - Combined using `StackingClassifier` with Logistic Regression as the final estimator
+
+---
+
+## ⚙️ How to Run
+
+### 1. Set up environment
 ```bash
-git clone https://github.com/Kv1108/Spam-SMS-detection.git
-cd Spam-SMS-detection
+cd Spam-SMS-Detection
+python -m venv venv
+venv\Scripts\activate     # On Windows
 pip install -r requirements.txt
+```
+
+### 2. Train the Model
+```bash
+python notebooks/spam_detector.py
+```
+
+This will:
+- Train the full pipeline
+- Show performance metrics and feature importance
+- Save the model to `spam_detection_model.pkl`
+
+### 3. Launch the Web App
+```bash
+python app.py
+```
+Visit [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser to use the spam detector.
+
+---
+
+## 📊 Evaluation Metrics
+- **Confusion Matrix**
+- **Classification Report**
+- **ROC-AUC Score**
+- **Feature Importance Visualization**
+
+---
+
+## 🖼️ Snapshots
+Screenshots from the project are available under the `Snapshots/` folder.
+
+---
+
+## 📦 Requirements
+Main libraries:
+- `scikit-learn`
+- `xgboost`
+- `nltk`
+- `pandas`, `numpy`
+- `matplotlib`, `seaborn`
+- `emoji`, `flask`
+
+> Install via: `pip install -r requirements.txt`
+
+---
+
+## 🙋 Author
+**Krishna Viradiya**  
+Internship Projects - 2025
+
+---
+
+## 📝 License
+MIT License - Free to use, modify, and distribute.

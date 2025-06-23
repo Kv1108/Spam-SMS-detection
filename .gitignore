@@ -1,5 +1,5 @@
 # Ignore large data files
-data/spam.csv
+Spam-SMS-Detectiondata/spam.csv
 
 # Ignore Python cache
 __pycache__/
