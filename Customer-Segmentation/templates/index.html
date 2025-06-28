@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation | Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --primary-dark: #4338ca;
+            --secondary: #f9fafb;
+            --text: #111827;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.02);
+            --hover-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            color: var(--text);
+            background-color: #f8fafc;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+        
+        .card:hover {
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .card-header {
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        /* Form Elements */
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+            font-size: 0.875rem;
+        }
+        
+        .help-text {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+            line-height: 1.4;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.875rem;
+            transition: var(--transition);
+            background: white;
+            font-family: inherit;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        
+        .range-inputs {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .range-inputs .form-group {
+            flex: 1;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-block {
+            display: flex;
+            width: 100%;
+        }
+        
+        /* Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .alert i {
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+        
+        .alert-error {
+            color: var(--error);
+            background-color: rgba(239, 68, 68, 0.08);
+            border-left: 4px solid var(--error);
+        }
+        
+        .alert-success {
+            color: var(--success);
+            background-color: rgba(16, 185, 129, 0.08);
+            border-left: 4px solid var(--success);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1.5rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .range-inputs {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="header">
+            <h1>Customer Segmentation</h1>
+            <p>Cluster analysis based on customer attributes</p>
+        </div>
+        
+        <form method="POST" class="card">
+            <div class="card-header">
+                <h2 class="card-title">Cluster Configuration</h2>
+            </div>
+            
+            <div class="section-title">
+                <span>Clustering Parameters</span>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="x_column">Primary Feature</label>
+                    <select name="x_column" id="x_column" required>
+                        {% for col in columns %}
+                            <option value="{{ col }}">{{ col }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="help-text">Select the main dimension for cluster analysis</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="y_column">Secondary Feature (Optional)</label>
+                    <select name="y_column" id="y_column">
+                        <option value="None">None (1D clustering)</option>
+                        {% for col in columns %}
+                            <option value="{{ col }}">{{ col }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="help-text">Add a second dimension for 2D clustering</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender">Gender Filter</label>
+                    <select name="gender" id="gender">
+                        {% for gender in genders %}
+                            <option value="{{ gender }}">{{ gender }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Age Range</label>
+                    <div class="range-inputs">
+                        <div class="form-group">
+                            <input type="number" name="age_min" id="age_min" 
+                                   min="{{ min_age }}" max="{{ max_age }}" 
+                                   value="{{ min_age }}" required
+                                   placeholder="Min age">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="age_max" id="age_max" 
+                                   min="{{ min_age }}" max="{{ max_age }}" 
+                                   value="{{ max_age }}" required
+                                   placeholder="Max age">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="palette">Color Palette</label>
+                    <select name="palette" id="palette">
+                        {% for p in palette_options %}
+                            <option value="{{ p }}">{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="help-text">Visual theme for cluster visualization</p>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-block">
+                <i class="fas fa-project-diagram"></i>
+                Generate Clusters
+            </button>
+            
+            {% if error %}
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>
+                        <strong>Analysis Error</strong>
+                        <p>{{ error }}</p>
+                    </div>
+                </div>
+            {% endif %}
+            
+            {% if success %}
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>Analysis Complete</strong>
+                        <p>{{ success }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clustering Results | Customer Segmentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --primary-dark: #4338ca;
+            --secondary: #f9fafb;
+            --text: #111827;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --error: #ef4444;
+            --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.02);
+            --hover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.2s ease;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            color: var(--text);
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .header p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+        
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .stat-card {
+            background: var(--secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .stat-title {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .visualization {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .visualization img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+        
+        .caption {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--secondary);
+        }
+        
+        @media (max-width: 640px) {
+            .result-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 240px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h2>Customer Segmentation Results</h2>
+                <p>Analysis of customer clusters based on selected parameters</p>
+            </div>
+            
+            <div class="result-stats">
+                <div class="stat-card">
+                    <div class="stat-title">Clustering Features</div>
+                    <div class="stat-value">CustomerID (1D)</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-title">Optimal Clusters</div>
+                    <div class="stat-value">2</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-title">Silhouette Score</div>
+                    <div class="stat-value">0.6264</div>
+                </div>
+            </div>
+            
+            <div class="visualization">
+                <img src="{{ url_for('static', filename='plots/cluster_plot.png') }}" 
+                     alt="Customer cluster visualization">
+                <p class="caption">Visual representation of customer segments</p>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="{{ url_for('download') }}" class="btn">
+                    <i class="fas fa-file-csv"></i> Download CSV
+                </a>
+                <a href="{{ url_for('static', filename='plots/cluster_plot.png') }}" 
+                   download="customer_segments.png" class="btn">
+                    <i class="fas fa-image"></i> Download Plot
+                </a>
+                <a href="{{ url_for('index') }}" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> New Analysis
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
